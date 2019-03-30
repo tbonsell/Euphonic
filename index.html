@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Musician's Sidekick</title>
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <link href='css/euphonic.css' rel='stylesheet' type='text/css'>
+    <script src="js/euphonic.js"></script>
+    <script src="js/euphonic.metronome.js"></script>
+    <script src="js/euphonic.chord.js"></script>
+    <script src="js/euphonic.scale.js"></script>
+
+    <script>
+        euphonic.ready(function() {
+
+            var writeContent = function(target, key) {
+                var el = document.querySelector(target);
+
+                if(arguments.length > 2) {
+                    el.innerHTML += '<span class="code-blue">' + key + '</span>: ' + '<span class="code-green">' + arguments[2] + '</span></br>';
+                } else {
+                    el.innerHTML += key + '</br>';
+                }
+            }
+
+            var clearContent = function(target) {
+                var el = document.querySelector(target);
+                el.innerHTML = '';
+            }
+            // beat = new euphonic.Metronome({counter:0});
+            // beat.start(function(obj) {
+            //     console.log('Tick: ', obj.beat, obj.tick);
+            // }, 120, 4);
+
+            var logData = function() {
+                clearContent(".sound-code");
+                writeContent(".sound-code", "===============================");
+                writeContent(".sound-code", "Chord Info");
+                writeContent(".sound-code", "===============================");
+                writeContent(".sound-code", "Chord set", euphonic.chord.get().chord());
+                writeContent(".sound-code", "Key", euphonic.chord.get().key());
+                writeContent(".sound-code", "Notes in key", euphonic.chord.get().notes());
+                writeContent(".sound-code", "Chord intervals", euphonic.chord.get().intervals());
+                writeContent(".sound-code", "Chord tones (numeric piano keys)", euphonic.chord.get().tones());
+                writeContent(".sound-code", "Chord semitones", euphonic.chord.get().semitones());
+                writeContent(".sound-code", "Chord relative minor", euphonic.chord.get().relative());
+                writeContent(".sound-code", "");
+                writeContent(".sound-code", "===============================");
+                writeContent(".sound-code", "Scale Info");
+                writeContent(".sound-code", "===============================");
+                writeContent(".sound-code", "Scale set", euphonic.scale.get().scale());
+                writeContent(".sound-code", "Scale notes", euphonic.scale.get().notes());
+                writeContent(".sound-code", "Scale tones (numeric piano keys)", euphonic.scale.get().tones());
+                writeContent(".sound-code", "Scale intervals", euphonic.scale.get().intervals());
+                writeContent(".sound-code", "Scale semitones", euphonic.scale.get().semitones());
+                writeContent(".sound-code", "Scale steps", euphonic.scale.get().steps());
+                writeContent(".sound-code", "Accidentals", euphonic.scale.get().keySignature().accidentals);
+                writeContent(".sound-code", "Sharps/Flats", euphonic.scale.get().keySignature().type);
+                writeContent(".sound-code", "Valid scales", euphonic.scale.get().validScales());
+                // writeContent(".sound-code", "");
+                // writeContent(".sound-code", "===============================");
+                // writeContent(".sound-code", "Testing Transposition");
+                // writeContent(".sound-code", "===============================");
+                // writeContent(".sound-code", "Shift C/E up 1 step", euphonic.chord.shift("C/E", 1));
+                // writeContent(".sound-code", "Get relative of C", euphonic.chord.get().relative('C'));
+                //
+                // writeContent(".sound-code", "Get accidental of Dm", euphonic.chord.get().accidental('Dm'));
+                //
+                // euphonic.chord.set().key(-2);
+                // writeContent(".sound-code", "Shift key down 2 steps", euphonic.chord.get().key());
+                //
+                // var chordPtn = /^([a-gA-G][#|b]?)(M|Maj|maj|m|Min|min|Dim|dim|Aug|aug|Sus|sus|5)?(6|7|9|11|13|M6|M7|M9|M11|M13|m6|m7|m9|m11|m13)?(b5|#5)?(\+4|add4|\+9|add9)?/;
+                // writeContent(".sound-code", "Match CM in valid chord pattern", 'CM'.match(chordPtn));
+            }
+
+            var populateSelect = function(id, data) {
+                var el = document.querySelector(id);
+                if(data !== undefined) {
+                    el.innerHTML = '';
+                    for(var i = 0; i < data.length; i++) {
+                       var option = document.createElement("option");
+                       option.text = data[i];
+                       option.value = data[i] == 'None' ? '' : data[i];
+                       el.add(option);
+                   }
+               }
+            }
+
+            var noteTriggers = document.querySelectorAll('.note-trigger');
+            var chordModifiers = document.querySelectorAll('.chord-modifier');
+            var scaleTrigger = document.querySelector('#scale-select');
+            noteTriggers.forEach(function(e) {
+                e.addEventListener("mousedown", function() {
+                    euphonic.chord.set().chord({
+                        key: this.dataset.note,
+                        quality: document.querySelector('#chord-quality').value,
+                        interval: document.querySelector('#chord-interval').value,
+                        sustain: document.querySelector('#chord-sustain').value,
+                        fifth: document.querySelector('#chord-fifth').value,
+                        add: document.querySelector('#chord-add').value
+                    });
+                    euphonic.scale.set().scale(euphonic.scale.get().validScales()[0]);
+                    populateSelect('#scale-select', euphonic.scale.get().validScales());
+                    logData();
+                });
+            });
+
+            chordModifiers.forEach(function(e) {
+                e.addEventListener("change", function() {
+                    euphonic.chord.set().chord({
+                        [this.dataset.mod]: this.value
+                    });
+                    euphonic.scale.set().scale(euphonic.scale.get().validScales()[0]);
+                    populateSelect('#scale-select', euphonic.scale.get().validScales());
+                    logData();
+                });
+            });
+
+            scaleTrigger.addEventListener("change", function() {
+                euphonic.scale.set().scale(this.value);
+                logData();
+            });
+
+            populateSelect('#chord-quality', euphonic.chord.get().chordOptions().qualities);
+            populateSelect('#chord-interval', euphonic.chord.get().chordOptions().intervals);
+            populateSelect('#chord-sustain', euphonic.chord.get().chordOptions().sustains);
+            populateSelect('#chord-fifth', euphonic.chord.get().chordOptions().fifths);
+            populateSelect('#chord-add', euphonic.chord.get().chordOptions().adds);
+        });
+    </script>
+</head>
+
+<body>
+    <section class="piano-section">
+        <div class="wrapper keyboard"></div>
+    </section>
+    <section class="sub-section">
+        <div class="wrapper">
+            <section>
+                <div class="sound-control">
+                    <div class="center note-buttons">
+                        <p>
+                            <button class="note-trigger" data-note="C">C</button>
+                            <button class="note-trigger" data-note="C#">C#</button>
+                            <button class="note-trigger" data-note="Db">Db</button>
+                            <button class="note-trigger" data-note="D">D</button>
+                            <button class="note-trigger" data-note="D#">D#</button>
+                            <button class="note-trigger" data-note="Eb">Eb</button>
+                            <button class="note-trigger" data-note="E">E</button>
+                            <button class="note-trigger" data-note="F">F</button>
+                            <button class="note-trigger" data-note="F#">F#</button>
+                            <button class="note-trigger" data-note="Gb">Gb</button>
+                            <button class="note-trigger" data-note="G">G</button>
+                            <button class="note-trigger" data-note="Ab">Ab</button>
+                            <button class="note-trigger" data-note="A">A</button>
+                            <button class="note-trigger" data-note="A#">A#</button>
+                            <button class="note-trigger" data-note="Bb">Bb</button>
+                            <button class="note-trigger" data-note="B">B</button><br>
+
+                            <select class="chord-modifier" id="chord-quality" name="chord-quality" data-mod="quality"></select>
+                            <select class="chord-modifier" id="chord-interval" name="chord-interval" data-mod="interval"></select>
+                            <select class="chord-modifier" id="chord-fifth" name="chord-fifth" data-mod="fifth"></select>
+                            <select class="chord-modifier" id="chord-add" name="chord-add" data-mod="add"></select>
+                            <select class="chord-modifier" id="chord-sustain" name="chord-sustain" data-mod="sustain"></select>
+                        </p>
+                        <p>
+                            <label for="chord-name">Selected Chord:</label> <input type="text" id="chord-name" value="" />
+                            <input type="hidden" id="chord-root" value="C" />
+                            <input type="hidden" id="chord-type" value="M" />
+                            <label for="octave-select">Octave:</label>
+                            <select id="octave-select" name="octave-select">
+                                <option value="0">1</option>
+                                <option value="1">2</option>
+                                <option value="2">3</option>
+                                <option value="3" selected="true">4</option>
+                                <option value="4">5</option>
+                                <option value="5">6</option>
+                                <option value="6">7</option>
+                            </select>
+                            <label for="pattern-select">Pattern:</label>
+                            <select id="pattern-select" name="pattern-select">
+                                <option value="pattern1" selected="true">Slow Run</option>
+                                <option value="pattern2">Fast Run</option>
+                                <option value="pattern3">Standard 1</option>
+                                <option value="pattern4">Rock 1</option>
+                            </select>
+                            <button class="note-add"> + </button>
+                            <button class="note-del"> - </button>
+                        </p>
+                        <p>
+                            <label for="scale-select">Suitable Scales:</label>
+                            <select id="scale-select" name="scale">
+                                <option value="N/A" selected="true">No Scales Available</option>
+                            </select> &nbsp;
+                            <label for="tempo-set">Tempo:</label>
+                            <input type="text" id="tempo-set" value="120" />
+                        </p>
+                    </div>
+                    <div class="sound-info">
+                        <code class="sound-code" contenteditable="true"></code>
+                    </div>
+
+                </div>
+            </section>
+        </div>
+    </section>
+</body>
+
+</html>

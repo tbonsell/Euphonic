@@ -1,0 +1,313 @@
+.sound-control .center {
+	width: 920px;
+	text-align: center;
+	margin: 0 auto;
+}
+
+.sound-control .note-buttons {
+	margin-bottom: 12px;
+}
+
+.sound-control .note-buttons button {
+	width: 40px;
+}
+.sound-control .type-buttons button {
+	width: 60px;
+}
+
+.sound-control label {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: .75em;
+}
+
+.sound-control .chord-pad {
+	width: 504px;
+	height: 176px;
+	border: 1px solid #CCC;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: .75em;
+	margin: 0 auto;
+}
+
+.sound-control .chord-pad .chord-button {
+  width: 80px;
+  height: 40px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size:1.2em;
+  margin: 2px;
+}
+
+.sound-control .note-del.removing {
+  color: #FF0000;
+  font-weight: bold;
+}
+
+.sound-control .chord-pad .chord-button.removable {
+  color: #FF0000;
+}
+
+.sound-info {
+    display: flex;
+    justify-content: center;
+}
+
+.sound-info code {
+    background-color: #222244;
+    color: #DDDDDD;
+    margin: 0 10px;
+    padding: 20px;
+    width: 50%;
+}
+
+.code-blue {
+    color: #7777FF;
+}
+
+.code-green {
+    color: #77FF77;
+}
+
+/* Piano Wrapper */
+#p-wrapper {
+  position:relative;
+  left:-20px;
+}
+
+/* White Keys */
+ul.piano-display {
+  display: block;
+  padding: 0;
+  height: 132px;
+  width: 1144px;
+  border-top: 2px solid #111;
+  border-bottom: 1px solid #555;
+  background: #111;
+  margin: 0 auto;
+  -moz-user-select':-moz-none;
+  -moz-user-select':none;
+  -o-user-select':none;
+  -khtml-user-select:none;
+  -webkit-user-select:none;
+  -ms-user-select:none;
+  user-select':none;
+}
+
+ul.piano-display li {
+  list-style: none;
+  float: left;
+  display: inline;
+  background: #aaa;
+  width: 22px;
+  position: relative;
+  cursor: pointer;
+}
+
+ul.piano-display li.key div {
+  display: block;
+  height: 132px;
+  background: url("../img/piano_keys.png") 0 0 no-repeat;
+}
+
+ul.piano-display li.key div.active-scale {
+  background: url("../img/piano_keys.png") -22px 0 no-repeat;
+}
+
+ul.piano-display li.key div.active {
+  background: url("../img/piano_keys.png") -44px 0 no-repeat !important;
+}
+
+/* Black Keys */
+ul.piano-display li span {
+  position: absolute;
+  top: 0px;
+  left: 14px;
+  width: 16px;
+  height: 84px;
+  background: url("../img/piano_keys.png") -66px 0 no-repeat;
+  z-index: 1000;
+}
+
+ul.piano-display li span.Cs, ul.piano-display li span.Fs {
+  left: 12px;
+}
+
+ul.piano-display li span.As, ul.piano-display li span.Ds {
+  left: 16px;
+}
+
+ul.piano-display li span.active-scale {
+  background: url("../img/piano_keys.png") -82px 0 no-repeat;
+}
+
+ul.piano-display li span.active {
+  background: url("../img/piano_keys.png") -98px 0 no-repeat !important;
+}
+
+ul.piano-labels {
+  display: block;
+  padding: 0;
+  height: 32px;
+  width: 1144px;
+  margin: 0 auto;
+}
+
+ul.piano-labels li {
+  list-style: none;
+  float: left;
+  display: inline;
+  background: #aaa;
+  width: 22px;
+  position: relative;
+}
+
+ul.piano-labels li div.key {
+  display: block;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: .75em;
+  padding: 4px 0;
+  text-align: center;
+}
+
+#svg {
+    width: 960px;
+    height: 200px;
+    display: block;
+    margin: 0 auto;
+}
+
+
+
+.fretboard {
+  position: relative;
+  margin-top: 40px;
+  left: 50%;
+  margin-left: -450px;
+  width: 960px;
+  height: 240px;
+  background: #755628;
+  box-shadow: inset -1px 0px 11px 0px rgba(0, 0, 0, 0.75);
+}
+.fretboard ul {
+    list-style-type: none;
+}
+.fretboard .open-notes {
+  position: absolute;
+  top: 3px;
+  left: -35px;
+}
+.fretboard .open-notes li {
+  margin-bottom: 20px;
+  font-size: 18px;
+  color: #fff;
+}
+.fretboard .open-notes li.active {
+  color: #fa990f;
+}
+.fretboard .semitone {
+  float: left;
+  width: 3px;
+  height: 240px;
+  background: #d7d6d6;
+  margin-left: 75px;
+  border-right: 2px solid #686868;
+}
+.fretboard .semitone.first {
+  position: absolute;
+  width: 50px;
+  left: -52px;
+  top: 0;
+  margin-left: 0;
+  background: #211f1d;
+}
+.fretboard .semitone .dot {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #383530;
+  position: relative;
+  top: 110px;
+  left: -46px;
+}
+.fretboard .semitone .dot.double {
+    top: 96px;
+}
+.fretboard .strings {
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 960px;
+  height: 250px;
+  margin: 0;
+  padding: 0;
+}
+.fretboard .strings li {
+  height: 1px;
+  display: inline-block;
+  width: 100%;
+  background: #c8bb93;
+  margin-bottom: 65px;
+  border-bottom: 2px solid #958963;
+  box-sizing: border-box;
+}
+.fretboard .strings li:nth-child(2) {
+  height: 2px;
+}
+.fretboard .strings li:nth-child(3) {
+  height: 3px;
+}
+.fretboard .strings li:nth-child(4) {
+  height: 4px;
+}
+.fretboard .strings li:nth-child(5) {
+  height: 5px;
+}
+.fretboard .strings li:nth-child(6) {
+  height: 6px;
+}
+.fretboard .notes {
+  position: absolute;
+  left: 17px;
+  top: -7px;
+  width: 960px;
+  height: 258px;
+  overflow-x: hidden;
+}
+.fretboard .notes .mask {
+  position: absolute;
+  right: -189px;
+  bottom: 0;
+  width: 1184px;
+  height: 30px;
+}
+.fretboard .notes .mask ul {
+  position: relative;
+  float: left;
+}
+.fretboard .notes .mask ul li {
+  float: left;
+  width: 30px;
+  height: 30px;
+  margin-right: 50px;
+  background: #fa990f;
+  color: #fff;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 30px;
+  box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.75);
+}
+.fretboard .notes .mask.a {
+  bottom: 47px;
+}
+.fretboard .notes .mask.d {
+  bottom: 93px;
+}
+.fretboard .notes .mask.g {
+  bottom: 137px;
+}
+.fretboard .notes .mask.b {
+  bottom: 181px;
+}
+.fretboard .notes .mask.high-e {
+  bottom: 224px;
+}
